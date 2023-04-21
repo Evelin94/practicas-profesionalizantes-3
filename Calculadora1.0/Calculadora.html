@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Calculadora</title>
+
+<style>
+input[type-button]
+{
+    /*color de fondo*/
+    background-color: blue;
+
+    /*color de letra*/
+    color: rgb(37, 37, 37);
+    /*espacio entre los botones*/
+    
+    /*tipo de texto */
+    border: none;
+    text-decoration: blue;
+    display: inline-block;
+    cursor: pointer;
+    margin: 3px 3px;
+}
+
+.operacion{
+    background-color: rgb(99, 247, 99);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+
+    
+}
+
+.number{
+    background-color:rgb(68, 68, 252);
+  color: white;
+  border: none;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+/*modificar borde*/
+input[type="text"]
+{
+    border: none;
+    color: black; /*color letra*/ 
+    padding: 15;
+    text-align: right;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    width: 98%;
+
+}
+
+.igual{
+    background-color:orange;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+
+}
+
+.borra{
+    background-color:rgb(252, 45, 45);
+  color: white;
+  border: none;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 2px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+/*modificamos el color de fondo*/
+body{
+    background-color: #D4D7DB;
+
+}
+/* en la tabla modificamos el color 
+de fondo y el espacioque lo rodea*/
+
+table{
+    background-color: #E4E7EA;
+    padding: 5px 5px;
+}
+
+
+</style>
+<script type="text/javascript">
+    var numpantalla="0";
+    var pantallaconnumero="si" //si o no
+    var usarpunto="no"; //saber si ya fue usador el boton punto
+  var numespera=0; //registrara elprimer valor ingresado
+  var operapendiente=""; //operacion con los 2 numeros ingresados
+var solucion=""; 
+
+function ingresarnumero(x)
+{
+    if(x!=".")
+    {
+        if(numpantalla=="0" || pantallaconnumero=="si")
+        {
+            document.Calculadora.txtboxnros.value=x;
+            numpantalla+=x;
+        }
+        else if(x!=".")
+        {
+            document.Calculadora.txtboxnros.value+=x;
+            numpantalla+=x;
+        }
+    }
+        if(x=="." && usarpunto=="no" && numpantalla=="0")
+        {
+            document.Calculadora.txtboxnros.value="0.";
+            // los datos se guarda en numpantalla
+          numpantalla+=x;
+          usarpunto="si";
+
+        }
+        else if (x=="." && usarpunto=="no")
+        {
+            document.Calculadora.txtboxnros.value +=x;
+            numpantalla+=x;
+            usarpunto="si";
+        }
+
+        //si el punto fue presionado anteriormente
+        else if(x=="." && usarpunto=="si")
+        {
+            pantallaconnumero="no";
+        }
+    
+}
+
+function ingresaroperacion(y)
+{
+    if (operapendiente=="")
+    {
+        numespera=document.Calculadora.txtboxnros.value;
+        document.Calculadora.txtboxnros.value+=y;
+        operapendiente=y;
+        pantallaconnumero="no";
+        numpantalla="";
+        usarpunto="no";
+
+    }
+}
+
+function resultado()
+{
+
+    if (operapendiente!= "")
+    {
+        solucion=numespera+operapendiente+numpantalla;
+        document.Calculadora.txtboxnros.value=eval(solucion);
+        numpantalla=eval(solucion);
+        pantallaconnumero="si";
+        operapendiente="";
+        usarpunto="no";
+    }
+
+}
+
+function limpiar()
+{
+    numpantalla="0";
+    pantallaconnumero="si";
+    usarpunto="no";
+    numespera=0;
+    operapendiente="";
+    solucion="";
+    document.Calculadora.txtboxnros.value="0";
+
+}
+
+
+
+</script>
+</head>
+<body>
+ <center>
+ <form name="Calculadora">
+    <table border="3">
+        <tr>
+            <td colspan="4">
+            <input type="text" name="txtboxnros" valor="0" disabled>
+            </td> </tr>
+            <tr>
+                <td class="number"><input type="button" value="7" onclick="ingresarnumero(this.value)"> </td>
+                <td class="number"><input type="button" value="8" onclick="ingresarnumero(this.value)"> </td>
+                <td class="number"><input type="button" value="9" onclick="ingresarnumero(this.value)"> </td>
+                <td class="operacion"><input type="button" value="+" onclick="ingresaroperacion(this.value)"> </td>
+               
+                
+            </tr>
+            <tr>
+                <td class="number"><input type="button" value="4" onclick="ingresarnumero(this.value)"> </td>
+                <td class="number"><input type="button" value="5" onclick="ingresarnumero(this.value)"> </td>
+                <td class="number"><input type="button" value="6" onclick="ingresarnumero(this.value)"> </td>
+                <td class="operacion"><input type="button" value="-" onclick="ingresaroperacion(this.value)"> </td>
+            </tr>
+            <tr>
+                <td class="number"><input type="button" value="3" onclick="ingresarnumero(this.value)"> </td>
+                <td class="number"><input type="button" value="2" onclick="ingresarnumero(this.value)"> </td>
+                <td class="number"><input type="button" value="1" onclick="ingresarnumero(this.value)"> </td>
+                <td class="operacion"><input type="button" value="*" onclick="ingresaroperacion(this.value)"> </td>
+                
+            </tr>
+           
+                    <td class="number"><input type="button" value="0" onclick="ingresarnumero(this.value)"> </td>
+                    <td class="number"><input type="button" value="." onclick="ingresarnumero(this.value)"> </td>
+                    <td class="igual"><input type="button" value="=" onclick="resultado()"> </td>
+                    <td class="operacion" ><input type="button" value="/" onclick="ingresaroperacion(this.value)"> </td>
+                
+            </tr>
+            <td class="borra" colspan="4"><input type="button" value="    Borrar" onclick="limpiar()"> </td>
+            <tr>
+
+            </tr>
+          
+    </table> 
+
+ </form>
+
+
+ </center>
+
+    
+</body>
+</html>
