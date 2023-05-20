@@ -1,0 +1,90 @@
+
+input[type-button]
+{
+    /*color de fondo*/
+    background-color: white;
+
+    /*color de letra*/
+    color: rgb(37, 37, 37);
+    
+    /*tipo de texto */
+    text-decoration: blue;
+    display: inline-table;
+    border: floralwhite;
+    cursor: pointer;
+}
+
+.operacion{
+    background-color: rgb(99, 247, 99);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+
+    
+}
+
+.number{
+  
+    background-color:rgb(68, 68, 252);
+  color: white;
+  border: none;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+/*modificar borde*/
+input[type="text"]
+{
+    border: none;
+    color: black; /*color letra*/ 
+    
+    text-align: right;
+    text-decoration: none;
+    display:inline-flex;
+    font-size: 16px;
+    margin: 4px;
+    cursor: pointer;
+
+}
+
+.igual{
+    background-color:orange;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+
+}
+
+.borra{
+    background-color:rgb(252, 45, 45);
+  color: white;
+  border: none;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+/*modificamos el color de fondo*/
+body{
+    background-color: #D4D7DB;
+
+}
+/* en la tabla modificamos el color 
+de fondo y el espacioque lo rodea*/
+
+table{
+    background-color: #E4E7EA;
+    padding: 5px 5px;
+}
