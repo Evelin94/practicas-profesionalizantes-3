@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ticket</title>
+  
+</head>
+<body>
+    <div id="ticketListContainer">
+        <ticket-list></ticket-list>
+      </div>
+  <ticket-from></ticket-from>
+  <script src="./simulacion29_6.js">
+    document.addEventListener('DOMContentLoaded', function() {
+        const ticketList = document.querySelector('ticket-list');
+    // Aquí puedes interactuar con el componente TicketList
+    // Por ejemplo, puedes llamar a un método del componente:
+    ticketList.addTicket('falla', 'alta', 'Descripción del ticket');
+    // Código para interactuar con el componente después de que se haya cargado el DOM
+    });
+  </script>
+</body>
+</html>
