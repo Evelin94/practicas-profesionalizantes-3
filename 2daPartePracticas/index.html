@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<style>
+  table, td, tr, th {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+</style>
+<body>
+  <x-crud></x-crud>
+</body>
+<script type="text/javascript">
+
+  // Model
+  class ContactModel {
+    constructor() {
+      this.dataContainer = [];
+      this.nextId = 1;
+    }
+
+    create(contact) {
+      contact.id = this.nextId++;
+      this.dataContainer.push(contact);
+    }
+
+    edit(contact) {
+      const index = this.dataContainer.findIndex(c => c.id === contact.id);
+      if (index !== -1) {
+        this.dataContainer[index] = contact;
+      }
+    }
+
+    delete(contactId) {
+      const index = this.dataContainer.findIndex(c => c.id === contactId);
+      if (index !== -1) {
+        this.dataContainer.splice(index, 1);
+      }
+    }
+
+    getAllContacts() {
+      return this.dataContainer;
+    }
+  }
+
+  // View
+  class ContactView extends HTMLElement {
+    constructor() {
+      super();
+
+      this.viewTitle = document.createElement('h1');
+      this.viewTitle.innerText = 'CRUD de Contactos Telefónicos';
+
+      this.createButton = document.createElement('button');
+      this.createButton.innerText = 'Crear';
+
+      this.nameInput = document.createElement('input');
+      this.nameInput.type = 'text';
+      this.nameInput.placeholder = 'Nombre y Apellido';
+
+      this.phoneNumberInput = document.createElement('input');
+      this.phoneNumberInput.type = 'text';
+      this.phoneNumberInput.placeholder = 'Número telefónico';
+
+      this.categorySelect = document.createElement('select');
+      this.categorySelect.innerHTML = `
+        <option value="Amigos">Amigos</option>
+        <option value="Trabajo">Trabajo</option>
+        <option value="Estudio">Estudio</option>
+        <option value="Familia">Familia</option>
+        <option value="Favoritos">Favoritos</option>
+        <option value="Servicios">Servicios</option>
+      `;
+
+      this.contactTable = document.createElement('table');
+      this.contactTableHeader = this.contactTable.createTHead();
+      this.contactTableBody = this.contactTable.createTBody();
+      this.contactTable.style.marginTop = '10px';
+
+      this.appendChild(this.viewTitle);
+      this.appendChild(this.nameInput);
+      this.appendChild(this.phoneNumberInput);
+      this.appendChild(this.categorySelect);
+      this.appendChild(this.createButton);
+      this.appendChild(this.contactTable);
+
+      this.contactModel = new ContactModel();
+
+      this.createButton.addEventListener('click', () => this.onCreateButtonClick());
+    }
+
+    connectedCallback() {
+      this.renderContacts();
+    }
+
+    onCreateButtonClick() {
+      const name = this.nameInput.value.trim();
+      const phoneNumber = this.phoneNumberInput.value.trim();
+      const category = this.categorySelect.value;
+
+      if (name === '' || phoneNumber === '') {
+        alert('ingrese el nombre y número de teléfono.');
+        return;
+      }
+
+      const contact = {
+        name: name,
+        phoneNumber: phoneNumber,
+        category: category
+      };
+
+      this.contactModel.create(contact);
+      this.renderContacts();
+      this.clearInputs();
+    }
+
+    renderContacts() {
+      this.contactTableBody.innerHTML = '';
+
+      const contacts = this.contactModel.getAllContacts();
+      for (const contact of contacts) {
+        const row = this.contactTableBody.insertRow();
+
+        const idCell = row.insertCell();
+        idCell.innerText = contact.id;
+
+        const nameCell = row.insertCell();
+        nameCell.innerText = contact.name;
+
+        const phoneNumberCell = row.insertCell();
+        phoneNumberCell.innerText = contact.phoneNumber;
+
+        const categoryCell = row.insertCell();
+        categoryCell.innerText = contact.category;
+
+        row.style.backgroundColor = this.getCategoryColor(contact.category);
+      }
+    }
+
+    clearInputs() {
+      this.nameInput.value = '';
+      this.phoneNumberInput.value = '';
+      this.categorySelect.selectedIndex = 0;
+    }
+
+    getCategoryColor(category) {
+      switch (category) {
+        case 'Amigos':
+          return 'lightgreen';
+        case 'Trabajo':
+          return 'lightblue';
+        case 'Estudio':
+          return 'lightyellow';
+        case 'Familia':
+          return 'lightpink';
+        case 'Favoritos':
+          return 'lightcyan';
+        case 'Servicios':
+          return 'lightsalmon';
+        default:
+          return 'white';
+      }
+    }
+  }
+
+  customElements.define('x-crud', ContactView);
+
+</script>
+</html>
+
+
